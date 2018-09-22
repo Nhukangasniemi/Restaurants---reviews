@@ -9,7 +9,7 @@ export class MapContainer extends Component {
       currentLocation: {
         lat: null,
         lng: null,
-    },
+      },
       showingInfoWindow: false,
       activeMarker: {},
       selectedPlace: {},
@@ -17,17 +17,14 @@ export class MapContainer extends Component {
     };
   }
 
+  componentWillMount() {
+    import('./Restaurants.json')
+    .then((data) => {
+      this.setState({restaurants: data});
+    })
+  }
+
   componentDidMount() {
-    // axios.get('Restaurants.js') // JSON File Path
-    //   .then( response => {
-    //     this.setState({
-    //     restaurants: response
-    //     });
-    //     console.log(this.state.restaurants)
-    // })
-    // .catch(error => {
-    //   console.log(error);
-    // });
     if(navigator && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((pos) => {
         const coords = pos.coords;
@@ -53,14 +50,14 @@ export class MapContainer extends Component {
       return <div>Loading...</div>;
     }
 
-    var goldStar = {
-      path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
-      fillColor: 'yellow',
-      fillOpacity: 0.8,
-      scale: 1,
-      strokeColor: 'gold',
-      strokeWeight: 14
-    };
+    // var goldStar = {
+    //   path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
+    //   fillColor: 'yellow',
+    //   fillOpacity: 0.8,
+    //   scale: 1,
+    //   strokeColor: 'gold',
+    //   strokeWeight: 14
+    // };
 
 
     return (
@@ -80,12 +77,21 @@ export class MapContainer extends Component {
           <Marker
             onClick={this.onMarkerClick}
             position={{lat: this.state.currentLocation.lat, lng: this.state.currentLocation.lng}}
-            icon={{
+            // icon={{
               
-            }}
+            // }}
             name={"Current location"}
           />
-          <Marker
+          {this.state.restaurants.map(res =>
+            <Marker onClick={this.onMarkerClick} 
+            position={{lat: res.lat, lng: res.lng}}
+            name={res.restaurantName}
+            key={res.restaurantName}
+            />
+          )}
+
+
+          {/* <Marker
     title={'The marker`s title will appear as a tooltip.'}
     name={'SOMA'}
     position={{lat: 61.508022915221915, lng: 23.626542821643056}}
@@ -100,7 +106,7 @@ export class MapContainer extends Component {
     position={{lat: 37.762391, lng: -122.439192}}
     icon={{
       url: "/path/to/custom_icon.png",
-    }} />
+    }} /> */}
           <InfoWindow
             marker={this.state.activeMarker}
             visible={this.state.showingInfoWindow}

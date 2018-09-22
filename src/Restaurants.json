@@ -1,0 +1,66 @@
+[
+   {
+      "restaurantName":"Lotus Garden",
+      "address":"Tesoman koulu, 33310 Tampere, Finland",
+      "lat":61.508022915221915,
+      "lng":23.626542821643056,
+      "ratings":[
+         {
+            "stars":5,
+            "comment":"Excellent brunch but affordable."
+         },
+         {
+            "stars":4,
+            "comment":"Kid friendly but waiting time is a bit long."
+         }
+      ]
+   },
+   {
+      "restaurantName":"Mexicoco",
+      "address":"Karjakontie 23, 33340 Tampere, Finland",
+      "lat":61.511502986191644,
+      "lng":23.609162107226553,
+      "ratings":[
+         {
+            "stars":5,
+            "comment":"Perfection! Great combination of sweet and spicy."
+         },
+         {
+            "stars":3,
+            "comment":"Tasty but too spicy for me."
+         }
+      ]
+   },
+   {
+    "restaurantName":"Feng Shui",
+    "address":"Kalkunvuorenkatu 52, 33310 Tampere, Finland",
+    "lat":61.504416,
+    "lng":23.610967,
+    "ratings":[
+       {
+          "stars":3,
+          "comment":"Too oily! Spring rolls are good enough."
+       },
+       {
+          "stars":4,
+          "comment":"Authentic Chineese food."
+       }
+    ]
+ },
+ {
+    "restaurantName":"Suomalainen",
+    "address":"Metsäkylänkatu 19, 33300 Tampere, Finland",
+    "lat":61.500608,
+    "lng":23.629071,
+    "ratings":[
+       {
+          "stars":5,
+          "comment":"A great place to try out Scandinavian food"
+       },
+       {
+          "stars":4,
+          "comment":"Fine dishes. Would be great if coffee is included in the meal."
+       }
+    ]
+ }
+]
