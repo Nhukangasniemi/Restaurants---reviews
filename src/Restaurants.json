@@ -4,6 +4,8 @@
       "address":"Tesoman koulu, 33310 Tampere, Finland",
       "lat":61.508022915221915,
       "lng":23.626542821643056,
+      "imageSrc": "https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_960_720.jpg",
+      "avgRating": 4, 
       "ratings":[
          {
             "stars":5,
@@ -12,6 +14,14 @@
          {
             "stars":4,
             "comment":"Kid friendly but waiting time is a bit long."
+         },
+         {
+            "stars":4,
+            "comment":"It's worth trying."
+         },
+         {
+            "stars":4,
+            "comment":"Love the rye bread here."
          }
       ]
    },
@@ -20,6 +30,8 @@
       "address":"Karjakontie 23, 33340 Tampere, Finland",
       "lat":61.511502986191644,
       "lng":23.609162107226553,
+      "imageSrc": "https://cdn.pixabay.com/photo/2017/01/26/02/06/platter-2009590_960_720.jpg",
+      "avgRating": 3,
       "ratings":[
          {
             "stars":5,
@@ -28,7 +40,15 @@
          {
             "stars":3,
             "comment":"Tasty but too spicy for me."
-         }
+         },
+         {
+             "stars": 3,
+             "comment":"Food is ok. However, there are not many options available."
+         },
+         {
+            "stars": 1,
+            "comment":"The reservation system failed badly."
+        }
       ]
    },
    {
@@ -36,15 +56,25 @@
     "address":"Kalkunvuorenkatu 52, 33310 Tampere, Finland",
     "lat":61.504416,
     "lng":23.610967,
+    "imageSrc": "https://cdn.pixabay.com/photo/2015/04/08/13/13/food-712665_960_720.jpg",
+    "avgRating": 4,
     "ratings":[
-       {
-          "stars":3,
-          "comment":"Too oily! Spring rolls are good enough."
-       },
-       {
-          "stars":4,
-          "comment":"Authentic Chineese food."
-       }
+        {
+            "stars":3,
+            "comment":"Too oily! Spring rolls are good enough."
+        },
+        {
+            "stars":4,
+            "comment":"Authentic Chineese food."
+        },
+        {
+            "stars":4,
+            "comment":"Buffet price is a little bit cheaper than others."
+        },
+        {
+            "stars":4,
+            "comment":"A la carte menu is diverse, we especially love the atmosphere here."
+        }
     ]
  },
  {
@@ -52,15 +82,25 @@
     "address":"Metsäkylänkatu 19, 33300 Tampere, Finland",
     "lat":61.500608,
     "lng":23.629071,
+    "imageSrc": "https://cdn.pixabay.com/photo/2015/09/02/12/41/dish-918613_960_720.jpg",
+    "avgRating": 5,
     "ratings":[
-       {
-          "stars":5,
-          "comment":"A great place to try out Scandinavian food"
-       },
-       {
-          "stars":4,
-          "comment":"Fine dishes. Would be great if coffee is included in the meal."
-       }
+        {
+            "stars":5,
+            "comment":"A great place to try out Scandinavian food"
+        },
+        {
+            "stars":4,
+            "comment":"Fine dishes. Would be great if coffee is included in the meal."
+        },
+        {
+            "stars":5,
+            "comment":"Service is fast, no more than half hour waiting. Food is excellent."
+        },
+        {
+            "stars":4,
+            "comment":"Available options for vegeterians and gluten-free."
+        }
     ]
  }
 ]

@@ -2,14 +2,9 @@
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
 .App-header {
   background-color: #222;
-  height: 150px;
+  height: 70px;
   padding: 20px;
   color: white;
 }
@@ -22,7 +17,33 @@
   font-size: large;
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+#resultCards{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+}
+¨
+.card {
+  box-shadow: 0 15px 30px 1px rgba(128, 128, 128, 0.31);
+  background: lightblue !important;
+  text-align: center;
+  border-radius: 5px;
+  width: inherit;
+  height: '100px';
+}
+
+.restaurantDetail {
+	position: relative;
+	text-align: left !important;
+	overflow: hidden;
+	float: left;
+  width: 45%;
+  padding: 7px;
+}
+
+.product-image {
+	display: inline-block;
+	position: relative;
+  width: 50%;
 }
