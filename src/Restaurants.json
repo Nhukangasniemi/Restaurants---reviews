@@ -5,7 +5,7 @@
       "lat":61.508022915221915,
       "lng":23.626542821643056,
       "imageSrc": "https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_960_720.jpg",
-      "avgRating": 4, 
+      "rating": 4, 
       "ratings":[
          {
             "stars":5,
@@ -31,7 +31,7 @@
       "lat":61.511502986191644,
       "lng":23.609162107226553,
       "imageSrc": "https://cdn.pixabay.com/photo/2017/01/26/02/06/platter-2009590_960_720.jpg",
-      "avgRating": 3,
+      "rating": 3,
       "ratings":[
          {
             "stars":5,
@@ -57,7 +57,7 @@
     "lat":61.504416,
     "lng":23.610967,
     "imageSrc": "https://cdn.pixabay.com/photo/2015/04/08/13/13/food-712665_960_720.jpg",
-    "avgRating": 4,
+    "rating": 4,
     "ratings":[
         {
             "stars":3,
@@ -83,7 +83,7 @@
     "lat":61.500608,
     "lng":23.629071,
     "imageSrc": "https://cdn.pixabay.com/photo/2015/09/02/12/41/dish-918613_960_720.jpg",
-    "avgRating": 5,
+    "rating": 5,
     "ratings":[
         {
             "stars":5,

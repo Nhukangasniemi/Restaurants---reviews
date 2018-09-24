@@ -5,7 +5,7 @@ class RestaurantCard extends React.Component {
         return (
             <div className='card'>
                 <div className="restaurantDetail">
-                <p style={{fontSize: '1.3em'}}>{this.props.name}</p>
+                <p style={{fontSize: '1.2em', color: '#FF8C00'}}>{this.props.name}</p>
                 <p>{this.props.rating}</p>
                 </div>
                 <div className="product-image">

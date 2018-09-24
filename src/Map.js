@@ -4,6 +4,7 @@ import Sort from "./Sort.js";
 import RestaurantCard from "./RestaurantCard.js";
 //import axios from 'axios';
 
+
 export class MapContainer extends Component {
   constructor(props) {
     super(props);
@@ -13,20 +14,15 @@ export class MapContainer extends Component {
         lng: null,
       },
       showingInfoWindow: false,
+      infoWindowRating: "",
       activeMarker: {},
       selectedPlace: {},
-      restaurants: []
+      restaurants: [],
+      places: []
     };
   }
 
   componentWillMount() {
-    import('./Restaurants.json')
-    .then((data) => {
-      this.setState({restaurants: data});
-    })
-  }
-
-  componentDidMount() {
     if(navigator && navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((pos) => {
         const coords = pos.coords;
@@ -40,14 +36,41 @@ export class MapContainer extends Component {
     }
   }
 
-  onMarkerClick = (props, marker) => { 
-    this.setState({
-      selectedPlace: props,
-      activeMarker: marker,
-      showingInfoWindow: true
+  componentDidMount() {
+    import('./Restaurants.json')
+    .then((data) => {
+      this.setState({restaurants: data});
     });
-    console.log(this.state.selectedPlace);
+  
   }
+
+
+  fetchPlaces = (mapProps, map) => this.searchNearby(map, map.center);
+  searchNearby = (map, center) => {
+    const {google} = this.props;
+    const service = new google.maps.places.PlacesService(map);
+    const request = {
+      location: center,
+      radius: '1000',
+      type: ['restaurant']
+    };
+
+    service.nearbySearch(request, (results, status) => {
+      if (status === google.maps.places.PlacesServiceStatus.OK)
+        this.setState({ places: results });
+    });
+  };
+ 
+
+
+onMarkerClick = (props, marker) => { 
+  this.setState({
+    selectedPlace: props,
+    activeMarker: marker,
+    showingInfoWindow: true,
+  });
+}
+    
 
   // onMapClick = () => {
   //   if (this.state.showingInfoWindow) {
@@ -59,30 +82,24 @@ export class MapContainer extends Component {
   // }
   showStars = (avgRating) => {
     let stars;
-    switch(avgRating) {
-      case 0:
+    if(avgRating === '0') {
         stars = "☆☆☆☆☆";
-        break;
-      case 1: 
-        stars = "★☆☆☆☆";
-        break;
-      case 2: 
-        stars = "★★☆☆☆";
-        break;
-      case 3: 
+    } else if (avgRating >=1 && avgRating<1.5) {
+      stars = "★☆☆☆☆";
+    } else if (avgRating >=1.5 && avgRating<2.5) {
+      stars = "★★☆☆☆";
+    } else if (avgRating >=2.5 && avgRating<3.5) {
         stars = "★★★☆☆";
-        break;
-      case 4: 
+    } else if (avgRating >=3.5 && avgRating<4.5) {
         stars = "★★★★☆";
-        break;
-      case 5: 
+    } else if (avgRating >= 4.5) {
         stars = "★★★★★";
-        break;
-      default:
+    } else {
         stars = "";
     }
     return stars;
   };
+
   
 
   render() {
@@ -90,14 +107,22 @@ export class MapContainer extends Component {
       return <div>Loading...</div>;
     };
 
-    let rating = this.showStars(this.state.activeMarker.avgRating); 
     let cards = [];
     this.state.restaurants.map(res => {
       cards.push(<RestaurantCard 
         key={res.restaurantName} 
         name={res.restaurantName}
         imageSrc={res.imageSrc}
-        rating={this.showStars(res.avgRating)} />);
+        rating={this.showStars(res.rating)} />);
+      return cards;
+    });
+
+    this.state.places.map(res => {
+      cards.push(<RestaurantCard 
+        key={res.id} 
+        name={res.name}
+        imageSrc={res.photos}
+        rating={this.showStars(res.rating)} />);
       return cards;
     });
 
@@ -121,19 +146,25 @@ export class MapContainer extends Component {
               height: '100vh',
             }}
             google={this.props.google}
+            onReady={this.fetchPlaces}
             zoom={14}
+            initialCenter={{
+              lat: this.state.lat,
+              lng: this.state.lng
+           }}
             center={{
               lat: this.state.currentLocation.lat,
               lng: this.state.currentLocation.lng
             }}
             //onClick={this.onMapClick}
+            centerAroundCurrentLocation
           >
+            
             <Marker
               onClick={this.onMarkerClick}
               position={{lat: this.state.currentLocation.lat, lng: this.state.currentLocation.lng}}
               name={"Current location"}
               icon={goldStar}
-              //animation={this.props.google.maps.Animation.BOUNCE}
             />
             {this.state.restaurants.map(res =>
               <Marker onClick={this.onMarkerClick}
@@ -142,8 +173,25 @@ export class MapContainer extends Component {
               name={res.restaurantName}
               key={res.restaurantName}
               imageSrc={res.imageSrc}
-              avgRating={res.avgRating}
+              avgRating={res.rating}
               animation={this.state.activeMarker ? (res.restaurantName === this.state.activeMarker.title ? '1' : '0') : '0'}
+              icon={{
+                url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+                scaledSize: {width: 35, height: 35}
+              }}
+              />
+            )}
+
+            {this.state.places.map(res =>
+              <Marker onClick={this.onMarkerClick}
+              title={res.name} 
+              position={res.geometry.location}
+              name={res.name}
+              key={res.id}
+              id={res.id}
+              imageSrc={res.imageSrc}
+              avgRating={res.rating}
+              animation={this.state.activeMarker ? (res.name === this.state.activeMarker.title ? '1' : '0') : '0'}
               icon={{
                 url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
                 scaledSize: {width: 35, height: 35}
@@ -158,17 +206,18 @@ export class MapContainer extends Component {
               <div style={{color: '#FF8C00'}}>
                 <h1>{this.state.selectedPlace.name}</h1>
                 <div className="rating">
-                  {rating}
+                  {/* {rating} */}
                 </div>
                 <img style={{width: 200, height: 150, 
                 display: (this.state.activeMarker.name === "Current location")? 'none': 'visible'}} src={`${this.state.activeMarker.imageSrc}`} alt={'Restaurant'} />
               </div>
             </InfoWindow>
+
           </Map>
         </div>
 
         <div style={{
-          width: '27%',
+          width: '25%',
           height: '100vh',
           border: '1px solid green',
           margin: '0 auto',
@@ -178,6 +227,7 @@ export class MapContainer extends Component {
           <div id='resultCards'>
             {cards}
           </div>
+
         </div>
       </div>
     );

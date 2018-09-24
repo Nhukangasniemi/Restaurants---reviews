@@ -23,14 +23,13 @@
   width: 100%;
 
 }
-¨
+
 .card {
-  box-shadow: 0 15px 30px 1px rgba(128, 128, 128, 0.31);
-  background: lightblue !important;
+  /* background: rgb(216, 214, 192) !important; */
   text-align: center;
-  border-radius: 5px;
   width: inherit;
-  height: '100px';
+  border-bottom: 1px solid rgb(201, 201, 168);
+  margin-bottom: 5px;
 }
 
 .restaurantDetail {
