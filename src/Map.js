@@ -18,7 +18,8 @@ export class MapContainer extends Component {
       activeMarker: {},
       selectedPlace: {},
       restaurants: [],
-      places: []
+      places: [],
+      placesUrl: []
     };
   }
 
@@ -56,9 +57,9 @@ export class MapContainer extends Component {
     };
 
     service.nearbySearch(request, (results, status) => {
-      if (status === google.maps.places.PlacesServiceStatus.OK)
-        this.setState({ places: results });
-    });
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        this.setState({ places: results});
+    }});
   };
  
 
@@ -117,14 +118,17 @@ onMarkerClick = (props, marker) => {
       return cards;
     });
 
-    this.state.places.map(res => {
+    for(let i = 0; i < this.state.places.length; i++) {
+      // let url = this.state.places[i].photos[0].getUrl({
+      //   maxWidth: '150px',
+      // })
       cards.push(<RestaurantCard 
-        key={res.id} 
-        name={res.name}
-        imageSrc={res.photos}
-        rating={this.showStars(res.rating)} />);
-      return cards;
-    });
+        key={this.state.places[i].id} 
+        name={this.state.places[i].name}
+        //imageSrc={`https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${res.geometry.location.lat},${res.geometry.location.lng}&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA&fov=90&heading=235&pitch=10`}
+        // imageSrc={url}
+        rating={this.showStars(this.state.places[i].rating)} />);
+    };
 
     const goldStar = {
       path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
@@ -166,21 +170,6 @@ onMarkerClick = (props, marker) => {
               name={"Current location"}
               icon={goldStar}
             />
-            {this.state.restaurants.map(res =>
-              <Marker onClick={this.onMarkerClick}
-              title={res.restaurantName} 
-              position={{lat: res.lat, lng: res.lng}}
-              name={res.restaurantName}
-              key={res.restaurantName}
-              imageSrc={res.imageSrc}
-              avgRating={res.rating}
-              animation={this.state.activeMarker ? (res.restaurantName === this.state.activeMarker.title ? '1' : '0') : '0'}
-              icon={{
-                url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
-                scaledSize: {width: 35, height: 35}
-              }}
-              />
-            )}
 
             {this.state.places.map(res =>
               <Marker onClick={this.onMarkerClick}
@@ -192,6 +181,22 @@ onMarkerClick = (props, marker) => {
               imageSrc={res.imageSrc}
               avgRating={res.rating}
               animation={this.state.activeMarker ? (res.name === this.state.activeMarker.title ? '1' : '0') : '0'}
+              icon={{
+                url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+                scaledSize: {width: 35, height: 35}
+              }}
+              />
+            )}
+
+            {this.state.restaurants.map(res =>
+              <Marker onClick={this.onMarkerClick}
+              title={res.restaurantName} 
+              position={{lat: res.lat, lng: res.lng}}
+              name={res.restaurantName}
+              key={res.restaurantName}
+              imageSrc={res.imageSrc}
+              avgRating={res.rating}
+              animation={this.state.activeMarker ? (res.restaurantName === this.state.activeMarker.title ? '1' : '0') : '0'}
               icon={{
                 url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
                 scaledSize: {width: 35, height: 35}
@@ -234,6 +239,5 @@ onMarkerClick = (props, marker) => {
   }
 }
 export default GoogleApiWrapper({
-  apiKey: "AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA",
-  v: "3"
+  apiKey: "AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA"
 })(MapContainer);
