@@ -17,15 +17,10 @@
   font-size: large;
 }
 
-#resultCards{
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-
-}
 
 .card {
   /* background: rgb(216, 214, 192) !important; */
+  display: flex;
   text-align: center;
   width: inherit;
   border-bottom: 1px solid rgb(201, 201, 168);
@@ -36,7 +31,6 @@
 	position: relative;
 	text-align: left !important;
 	overflow: hidden;
-	float: left;
   width: 45%;
   padding: 7px;
 }

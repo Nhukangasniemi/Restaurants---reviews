@@ -19,48 +19,49 @@ export class MapContainer extends Component {
       selectedPlace: {},
       restaurants: [],
       places: [],
-      placesUrl: []
+      placesPhoto: []
     };
   }
 
-  componentWillMount() {
-    if(navigator && navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((pos) => {
-        const coords = pos.coords;
-        this.setState({
-          currentLocation: {
-            lat: coords.latitude,
-            lng: coords.longitude,
-          }
-        })
-      })
-    }
-  }
 
   componentDidMount() {
     import('./Restaurants.json')
     .then((data) => {
       this.setState({restaurants: data});
     });
-  
   }
 
 
   fetchPlaces = (mapProps, map) => this.searchNearby(map, map.center);
-  searchNearby = (map, center) => {
-    const {google} = this.props;
-    const service = new google.maps.places.PlacesService(map);
-    const request = {
-      location: center,
-      radius: '1000',
-      type: ['restaurant']
-    };
-
-    service.nearbySearch(request, (results, status) => {
-      if (status === google.maps.places.PlacesServiceStatus.OK) {
-        this.setState({ places: results});
-    }});
-  };
+    searchNearby = (map) => {
+      const {google} = this.props;
+      if(navigator && navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((pos) => {
+          let initialLocation = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+          const coords = pos.coords;
+          this.setState({
+            currentLocation: {
+              lat: coords.latitude,
+              lng: coords.longitude,
+            }
+          })
+        
+     
+      map.setCenter(initialLocation)
+      const service = new google.maps.places.PlacesService(map);
+      const request = {
+        location: initialLocation,
+        radius: '1000',
+        type: ['restaurant']
+      };
+  
+      service.nearbySearch(request, (results, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          this.setState({ places: results});
+      }});
+    })
+    }}
+    
  
 
 
@@ -109,6 +110,7 @@ onMarkerClick = (props, marker) => {
     };
 
     let cards = [];
+    
     this.state.restaurants.map(res => {
       cards.push(<RestaurantCard 
         key={res.restaurantName} 
@@ -118,17 +120,45 @@ onMarkerClick = (props, marker) => {
       return cards;
     });
 
-    for(let i = 0; i < this.state.places.length; i++) {
-      // let url = this.state.places[i].photos[0].getUrl({
-      //   maxWidth: '150px',
-      // })
-      cards.push(<RestaurantCard 
-        key={this.state.places[i].id} 
-        name={this.state.places[i].name}
-        //imageSrc={`https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${res.geometry.location.lat},${res.geometry.location.lng}&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA&fov=90&heading=235&pitch=10`}
-        // imageSrc={url}
-        rating={this.showStars(this.state.places[i].rating)} />);
-    };
+    let googleCards = [];
+    // for(let i = 0; i < this.state.places.length; i++) {
+      this.state.places.map((place) => {
+      fetch(`https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?placeid=${place.place_id}&fields=photo&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA`, {
+        crossDomain:true,
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify()
+      })
+      .then(res => res.json())
+      .then(data => {
+      
+      let photos = data.result.photos;
+      let photo;
+      if(photos) {
+        photo = photos[0];
+        
+        place.photo = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=150&photoreference=${photo.photo_reference}&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA`
+        
+        // googleCards.push(<RestaurantCard 
+        //   key={place.id} 
+        //   name={place.name}
+        //   //imageSrc={`https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${res.geometry.location.lat},${res.geometry.location.lng}&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA&fov=90&heading=235&pitch=10`}
+        //   imageSrc={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&photoreference=${photo.photo_reference}&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA`}
+        //   rating={this.showStars(place.rating)} />);
+      } else {
+        photo = "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png";
+        place.photo = photo;
+        // googleCards.push(<RestaurantCard 
+        //   key={place.id} 
+        //   name={place.name}
+        //   //imageSrc={`https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${res.geometry.location.lat},${res.geometry.location.lng}&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA&fov=90&heading=235&pitch=10`}
+        //   imageSrc={photo}
+        //   rating={this.showStars(place.rating)} />);
+      }
+    })
+    return {googleCards}
+  })
+    //console.log(googleCards)
 
     const goldStar = {
       path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
@@ -161,6 +191,7 @@ onMarkerClick = (props, marker) => {
               lng: this.state.currentLocation.lng
             }}
             //onClick={this.onMapClick}
+            googlePlaces={this.state.places}
             centerAroundCurrentLocation
           >
             
@@ -230,7 +261,15 @@ onMarkerClick = (props, marker) => {
         }}>
           <Sort />
           <div id='resultCards'>
-            {cards}
+            <div>{this.state.places.map((place) => 
+              <RestaurantCard 
+                key={place.id} 
+                name={place.name}
+                //imageSrc={`https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${res.geometry.location.lat},${res.geometry.location.lng}&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA&fov=90&heading=235&pitch=10`}
+                imageSrc={place.photo}
+                rating={this.showStars(place.rating)} />
+            )}</div>
+            <div>{cards}</div>
           </div>
 
         </div>

@@ -5,11 +5,11 @@ class RestaurantCard extends React.Component {
         return (
             <div className='card'>
                 <div className="restaurantDetail">
-                <p style={{fontSize: '1.2em', color: '#FF8C00'}}>{this.props.name}</p>
+                <p><a style={{fontSize: '1.2em', color: '#FF8C00'}} href="">{this.props.name}</a></p>
                 <p>{this.props.rating}</p>
                 </div>
                 <div className="product-image">
-                <img style={{width: '100%', height: '100%'}} src={this.props.imageSrc} alt='Restaurant'/>
+                <img style={{width: '150px', height: '100px'}} src={this.props.imageSrc} alt='Restaurant'/>
                 </div>
             </div>
         )
