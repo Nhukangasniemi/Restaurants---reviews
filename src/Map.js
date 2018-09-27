@@ -120,8 +120,6 @@ onMarkerClick = (props, marker) => {
       return cards;
     });
 
-    let googleCards = [];
-    // for(let i = 0; i < this.state.places.length; i++) {
       this.state.places.map((place) => {
       fetch(`https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?placeid=${place.place_id}&fields=photo&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA`, {
         crossDomain:true,
@@ -138,27 +136,13 @@ onMarkerClick = (props, marker) => {
         photo = photos[0];
         
         place.photo = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=150&photoreference=${photo.photo_reference}&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA`
-        
-        // googleCards.push(<RestaurantCard 
-        //   key={place.id} 
-        //   name={place.name}
-        //   //imageSrc={`https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${res.geometry.location.lat},${res.geometry.location.lng}&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA&fov=90&heading=235&pitch=10`}
-        //   imageSrc={`https://maps.googleapis.com/maps/api/place/photo?maxwidth=200&photoreference=${photo.photo_reference}&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA`}
-        //   rating={this.showStars(place.rating)} />);
       } else {
         photo = "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png";
         place.photo = photo;
-        // googleCards.push(<RestaurantCard 
-        //   key={place.id} 
-        //   name={place.name}
-        //   //imageSrc={`https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${res.geometry.location.lat},${res.geometry.location.lng}&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA&fov=90&heading=235&pitch=10`}
-        //   imageSrc={photo}
-        //   rating={this.showStars(place.rating)} />);
       }
     })
-    return {googleCards}
+    return place.photo
   })
-    //console.log(googleCards)
 
     const goldStar = {
       path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
@@ -168,7 +152,7 @@ onMarkerClick = (props, marker) => {
       strokeColor: 'gold',
       strokeWeight: 3
     };
-    
+  console.log(this.state.places)    
 
 
     return (
@@ -209,8 +193,9 @@ onMarkerClick = (props, marker) => {
               name={res.name}
               key={res.id}
               id={res.id}
-              imageSrc={res.imageSrc}
-              avgRating={res.rating}
+              imageSrc={res.photo}
+              address={res.vicinity}
+              rating={res.rating}
               animation={this.state.activeMarker ? (res.name === this.state.activeMarker.title ? '1' : '0') : '0'}
               icon={{
                 url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
@@ -226,7 +211,8 @@ onMarkerClick = (props, marker) => {
               name={res.restaurantName}
               key={res.restaurantName}
               imageSrc={res.imageSrc}
-              avgRating={res.rating}
+              rating={res.rating}
+              address={res.vicinity}
               animation={this.state.activeMarker ? (res.restaurantName === this.state.activeMarker.title ? '1' : '0') : '0'}
               icon={{
                 url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
@@ -239,13 +225,15 @@ onMarkerClick = (props, marker) => {
               marker={this.state.activeMarker}
               visible={this.state.showingInfoWindow}
             >
-              <div style={{color: '#FF8C00'}}>
-                <h1>{this.state.selectedPlace.name}</h1>
-                <div className="rating">
-                  {/* {rating} */}
-                </div>
-                <img style={{width: 200, height: 150, 
+              <div>
+                <h2 style={{color: '#FF8C00'}}>{this.state.selectedPlace.name}</h2>
+                <p style={{color: '#901010'}}>
+                  {this.state.activeMarker.address}
+                </p>
+                <div>
+                <img style={{width: 150, height: 100, 
                 display: (this.state.activeMarker.name === "Current location")? 'none': 'visible'}} src={`${this.state.activeMarker.imageSrc}`} alt={'Restaurant'} />
+                </div>
               </div>
             </InfoWindow>
 
