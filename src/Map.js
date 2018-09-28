@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import Sort from "./Sort.js";
-import RestaurantCard from "./RestaurantCard.js";
+import Sidebar from "./Sidebar.js"
 //import axios from 'axios';
 
 
@@ -18,21 +18,21 @@ export class MapContainer extends Component {
       activeMarker: {},
       selectedPlace: {},
       restaurants: [],
-      places: [],
-      placesPhoto: []
+      places: []
     };
   }
 
-
-  componentDidMount() {
+  getMyRestaurants = () => 
     import('./Restaurants.json')
     .then((data) => {
       this.setState({restaurants: data});
     });
+
+
+  fetchPlaces = (mapProps, map) => {
+    this.searchNearby(map, map.center);
+    this.getMyRestaurants();
   }
-
-
-  fetchPlaces = (mapProps, map) => this.searchNearby(map, map.center);
     searchNearby = (map) => {
       const {google} = this.props;
       if(navigator && navigator.geolocation) {
@@ -57,12 +57,35 @@ export class MapContainer extends Component {
   
       service.nearbySearch(request, (results, status) => {
         if (status === google.maps.places.PlacesServiceStatus.OK) {
-          this.setState({ places: results});
-      }});
+          results.map(place =>
+            fetch(`https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?placeid=${place.place_id}&fields=photo&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA`, {
+              crossDomain:true,
+              method: 'POST',
+              headers: {'Content-Type':'application/json'},
+              body: JSON.stringify()
+            })
+            .then(res => res.json())
+            .then(data => {
+            let photos = data.result.photos;
+            let photo;
+            if(photos) {
+              photo = photos[0];
+              
+              place.photo = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=150&photoreference=${photo.photo_reference}&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA`
+            } else {
+              photo = "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png";
+              place.photo = photo;
+            }
+          })
+        )
+        console.log(results)
+        return this.setState({ places: results});
+      }
+      });
+
     })
-    }}
-    
- 
+    }
+  }
 
 
 onMarkerClick = (props, marker) => { 
@@ -82,25 +105,7 @@ onMarkerClick = (props, marker) => {
   //     });
   //   }
   // }
-  showStars = (avgRating) => {
-    let stars;
-    if(avgRating === '0') {
-        stars = "☆☆☆☆☆";
-    } else if (avgRating >=1 && avgRating<1.5) {
-      stars = "★☆☆☆☆";
-    } else if (avgRating >=1.5 && avgRating<2.5) {
-      stars = "★★☆☆☆";
-    } else if (avgRating >=2.5 && avgRating<3.5) {
-        stars = "★★★☆☆";
-    } else if (avgRating >=3.5 && avgRating<4.5) {
-        stars = "★★★★☆";
-    } else if (avgRating >= 4.5) {
-        stars = "★★★★★";
-    } else {
-        stars = "";
-    }
-    return stars;
-  };
+
 
   
 
@@ -108,41 +113,6 @@ onMarkerClick = (props, marker) => {
     if (!this.props.google) {
       return <div>Loading...</div>;
     };
-
-    let cards = [];
-    
-    this.state.restaurants.map(res => {
-      cards.push(<RestaurantCard 
-        key={res.restaurantName} 
-        name={res.restaurantName}
-        imageSrc={res.imageSrc}
-        rating={this.showStars(res.rating)} />);
-      return cards;
-    });
-
-      this.state.places.map((place) => {
-      fetch(`https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api/place/details/json?placeid=${place.place_id}&fields=photo&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA`, {
-        crossDomain:true,
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify()
-      })
-      .then(res => res.json())
-      .then(data => {
-      
-      let photos = data.result.photos;
-      let photo;
-      if(photos) {
-        photo = photos[0];
-        
-        place.photo = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=150&photoreference=${photo.photo_reference}&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA`
-      } else {
-        photo = "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png";
-        place.photo = photo;
-      }
-    })
-    return place.photo
-  })
 
     const goldStar = {
       path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
@@ -152,7 +122,6 @@ onMarkerClick = (props, marker) => {
       strokeColor: 'gold',
       strokeWeight: 3
     };
-  console.log(this.state.places)    
 
 
     return (
@@ -245,21 +214,9 @@ onMarkerClick = (props, marker) => {
           height: '100vh',
           border: '1px solid green',
           margin: '0 auto',
-          overflow: 'auto'
-        }}>
+          overflow: 'auto'}}>
           <Sort />
-          <div id='resultCards'>
-            <div>{this.state.places.map((place) => 
-              <RestaurantCard 
-                key={place.id} 
-                name={place.name}
-                //imageSrc={`https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${res.geometry.location.lat},${res.geometry.location.lng}&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA&fov=90&heading=235&pitch=10`}
-                imageSrc={place.photo}
-                rating={this.showStars(place.rating)} />
-            )}</div>
-            <div>{cards}</div>
-          </div>
-
+          <Sidebar id='resultCards' googlePlaces = {this.state.places} myRestaurants={this.state.restaurants} />
         </div>
       </div>
     );
