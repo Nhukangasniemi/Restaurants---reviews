@@ -6,22 +6,26 @@
       "lng":23.626542821643056,
       "imageSrc": "https://cdn.pixabay.com/photo/2017/12/09/08/18/pizza-3007395_960_720.jpg",
       "rating": 4, 
-      "ratings":[
+      "reviews":[
          {
+            "author_name": "Nhu Kangasniemi",
             "stars":5,
-            "comment":"Excellent brunch but affordable."
+            "text":"Excellent brunch but affordable."
          },
          {
+            "author_name": "Miikka Kangasniemi",
             "stars":4,
-            "comment":"Kid friendly but waiting time is a bit long."
+            "text":"Kid friendly but waiting time is a bit long."
          },
          {
+            "author_name": "Päivi Kangasniemi",
             "stars":4,
-            "comment":"It's worth trying."
+            "text":"It's worth trying."
          },
          {
+            "author_name": "Jussi Kangasniemi",
             "stars":4,
-            "comment":"Love the rye bread here."
+            "text":"Love the rye bread here."
          }
       ]
    },
@@ -32,22 +36,26 @@
       "lng":23.609162107226553,
       "imageSrc": "https://cdn.pixabay.com/photo/2017/01/26/02/06/platter-2009590_960_720.jpg",
       "rating": 3,
-      "ratings":[
+      "reviews":[
          {
+            "author_name": "Nhu Kangasniemi",
             "stars":5,
-            "comment":"Perfection! Great combination of sweet and spicy."
+            "text":"Perfection! Great combination of sweet and spicy."
          },
          {
+            "author_name": "Miikka Kangasniemi",
             "stars":3,
-            "comment":"Tasty but too spicy for me."
+            "text":"Tasty but too spicy for me."
          },
          {
+            "author_name": "Päivi Kangasniemi",
              "stars": 3,
-             "comment":"Food is ok. However, there are not many options available."
+             "text":"Food is ok. However, there are not many options available."
          },
          {
+            "author_name": "Jussi Kangasniemi",
             "stars": 1,
-            "comment":"The reservation system failed badly."
+            "text":"The reservation system failed badly."
         }
       ]
    },
@@ -58,22 +66,26 @@
     "lng":23.610967,
     "imageSrc": "https://cdn.pixabay.com/photo/2015/04/08/13/13/food-712665_960_720.jpg",
     "rating": 4,
-    "ratings":[
+    "reviews":[
         {
+            "author_name": "Nhu Kangasniemi",
             "stars":3,
-            "comment":"Too oily! Spring rolls are good enough."
+            "text":"Too oily! Spring rolls are good enough."
         },
         {
+            "author_name": "Miikka Kangasniemi",
             "stars":4,
-            "comment":"Authentic Chineese food."
+            "text":"Authentic Chineese food."
         },
         {
+            "author_name": "Päivi Kangasniemi",
             "stars":4,
-            "comment":"Buffet price is a little bit cheaper than others."
+            "text":"Buffet price is a little bit cheaper than others."
         },
         {
+            "author_name": "Jussi Kangasniemi",
             "stars":4,
-            "comment":"A la carte menu is diverse, we especially love the atmosphere here."
+            "text":"A la carte menu is diverse, we especially love the atmosphere here."
         }
     ]
  },
@@ -84,22 +96,26 @@
     "lng":23.629071,
     "imageSrc": "https://cdn.pixabay.com/photo/2015/09/02/12/41/dish-918613_960_720.jpg",
     "rating": 5,
-    "ratings":[
+    "reviews":[
         {
+            "author_name": "Nhu Kangasniemi",
             "stars":5,
-            "comment":"A great place to try out Scandinavian food"
+            "text":"A great place to try out Scandinavian food"
         },
         {
+            "author_name": "Miikka Kangasniemi",
             "stars":4,
-            "comment":"Fine dishes. Would be great if coffee is included in the meal."
+            "text":"Fine dishes. Would be great if coffee is included in the meal."
         },
         {
+            "author_name": "Päivi Kangasniemi",
             "stars":5,
-            "comment":"Service is fast, no more than half hour waiting. Food is excellent."
+            "text":"Service is fast, no more than half hour waiting. Food is excellent."
         },
         {
+            "author_name": "Jussi Kangasniemi",
             "stars":4,
-            "comment":"Available options for vegeterians and gluten-free."
+            "text":"Available options for vegeterians and gluten-free."
         }
     ]
  }

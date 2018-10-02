@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
-import GoogleApiWrapper from "./Map.js"
+import GoogleApiWrapper from "./Map.js";
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends Component {
   render() {
     return (
+      <MuiThemeProvider>
       <div className="App">
         <header className="App-header">
           {/* <img src={logo} className="App-logo" alt="logo" /> */}
@@ -14,6 +16,7 @@ class App extends Component {
           <GoogleApiWrapper />
         </div>
       </div>
+      </MuiThemeProvider>
     );
   }
 }

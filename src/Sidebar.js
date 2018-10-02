@@ -26,24 +26,29 @@ class Sidebar extends React.Component {
     render() {
 
         return (
-            <div>
+            <div >
                 <div>{this.props.googlePlaces.map(place => 
                     <RestaurantCard 
                     key={place.id} 
                     name={place.name}
-                    //imageSrc={`https://maps.googleapis.com/maps/api/streetview?size=400x400&location=${res.geometry.location.lat},${res.geometry.location.lng}&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA&fov=90&heading=235&pitch=10`}
                     imageSrc={place.photo}
-                    rating={this.showStars(place.rating)} />
+                    streetView={`https://maps.googleapis.com/maps/api/streetview?size=450x370&location=${place.geometry.location.lat()},${place.geometry.location.lng()}&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA&fov=90&heading=235&pitch=10`}
+                    placeReviews={place.reviews}
+                    rating={this.showStars(place.rating)}
+                    showStars={this.showStars} />
                 )}
                 </div>
                 <div>{this.props.myRestaurants.map(res => 
                     <RestaurantCard 
                     key={res.restaurantName} 
                     name={res.restaurantName}
+                    isMyRes={true}
                     imageSrc={res.imageSrc}
-                    rating={this.showStars(res.rating)} />)
+                    streetView={`https://maps.googleapis.com/maps/api/streetview?size=450x370&location=${res.lat},${res.lng}&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA&fov=90&heading=235&pitch=10`}
+                    resReviews={res.reviews}
+                    rating={this.showStars(res.rating)} 
+                    showStars={this.showStars}/>)
                 }
-
                 </div>
             </div>
         )

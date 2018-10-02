@@ -28,15 +28,64 @@
 }
 
 .restaurantDetail {
-	position: relative;
 	text-align: left !important;
-	overflow: hidden;
+	overflow: auto;
   width: 45%;
-  padding: 7px;
+  padding-left: 5px;
 }
 
 .product-image {
-	display: inline-block;
-	position: relative;
+  margin-top: 5px;
   width: 50%;
+}
+
+.infoButton {
+  height: auto !important;
+  background: greenyellow !important;
+  margin-bottom: 5px;
+}
+.infoButton span {
+  padding: 0 !important;
+  margin: 0 !important;
+  font-size: 1em !important;
+  text-transform: none !important;
+}
+
+.dialogBox {
+  display: inline-flex;
+  justify-content: space-around;
+  background: #fef65b;
+}
+
+.streetView, .customerReview {
+  width: 45%;
+}
+
+.review {
+  display: flex;
+  align-items: flex-start;
+  text-align: left !important;
+  border: 0.5px solid darkgray;
+  margin-bottom: 5px;
+}
+
+.author {
+  width: 28%;
+}
+
+.textReview {
+  width: 70%;
+  border-left: 1px dashed peru; 
+}
+
+h3 {
+  color: #990014;
+}
+
+form input, form textarea {
+  width: 40%;
+}
+
+.popup {
+  background-color: rgba(0,0,0, 0.5);
 }
