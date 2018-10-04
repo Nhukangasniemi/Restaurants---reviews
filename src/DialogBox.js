@@ -86,7 +86,7 @@ export default class DialogBox extends React.Component {
                   <h3>Street View</h3>
                   <img src={this.props.streetView} alt="streetView" />
                   <h3>Leave Your Comment Here</h3>
-                  <form>
+                  <form className="dropReview">
                     <label htmlFor="author_name">Author:</label> <br />
                     <input type="text" id="author" name="author_name" 
                     value={this.state.comment.author_name}

@@ -3,6 +3,9 @@ import RestaurantCard from './RestaurantCard.js'
 
 class Sidebar extends React.Component {
     
+    componentDidUpdate() {
+        console.log("Component Did update")
+    }
     showStars = (avgRating) => {
         let stars;
         if(avgRating === '0') {
@@ -26,7 +29,7 @@ class Sidebar extends React.Component {
     render() {
 
         return (
-            <div >
+            <div style={{height: '85vh',overflowY: 'scroll'}}>
                 <div>{this.props.googlePlaces.map(place => 
                     <RestaurantCard 
                     key={place.id} 

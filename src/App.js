@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './App.css';
 import GoogleApiWrapper from "./Map.js";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+// import Sort from "./Sort.js";
+// import Sidebar from "./Sidebar.js";
 
 class App extends Component {
   render() {

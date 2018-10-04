@@ -82,10 +82,22 @@ h3 {
   color: #990014;
 }
 
-form input, form textarea {
+.dropReview input, form textarea {
   width: 40%;
 }
 
 .popup {
   background-color: rgba(0,0,0, 0.5);
+}
+
+.minBox, .maxBox {
+  display: inline-block;
+  width: 45%;
+}
+
+.sortForm button {
+  display: inline-block;
+  width: 30%;
+  padding: 5px;
+ 
 }

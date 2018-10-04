@@ -262,13 +262,11 @@ export class MapContainer extends Component {
       </Dialog> : null}
 
         <div style={{width: '25%',height: 'inherit',
-          border: '1px solid green',margin: '0 auto',overflow: 'auto'}}>
+          border: '1px solid green',margin: '0 auto'}}>
           <Sort />
           <Sidebar id='resultCards'
             googlePlaces = {this.state.places}
-            myRestaurants={this.state.restaurants}
-          />
-    
+            myRestaurants={this.state.restaurants}/>
         </div>
       </div>
     );
