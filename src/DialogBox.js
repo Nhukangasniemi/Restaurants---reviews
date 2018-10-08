@@ -11,13 +11,16 @@ const customContentStyle = {
 const origin = {author_name: "", rating: "", text: ""};
 
 export default class DialogBox extends React.Component {
-  state = {
+  constructor(props) {
+  super(props);
+  this.state = {
     open: false,
     reviews: [],
     comment: Object.assign({}, origin),
   };
+  }
 
-  handleOpen = () => {
+  handleOpen = (e) => {
     this.setState({open: true});
   };
 
@@ -50,7 +53,7 @@ export default class DialogBox extends React.Component {
         onClick={this.handleClose}
       />
     ];
-
+    
     let cardReviews = [];
     if(this.props.cardReviews) {
       this.props.cardReviews.map(review => {
@@ -66,9 +69,10 @@ export default class DialogBox extends React.Component {
       });
     }
 
+
     return (
       <div>
-        <RaisedButton className="infoButton" label="More Info" onClick={this.handleOpen} />
+        <RaisedButton className="infoButton" label="More Info" onClick={this.handleOpen}/>
         <Dialog
         style={{textAlign: 'center', color: '#990014'}}
         autoDetectWindowHeight={true}
@@ -112,5 +116,4 @@ export default class DialogBox extends React.Component {
         </Dialog>
       </div>
     );
-  }
-}
+  }}
