@@ -29,7 +29,7 @@ export default class DialogBox extends React.Component {
   };
 
   handleChange = (e) => {
-    const field = e.target.name;
+    let field = e.target.name;
     let value = e.target.value;
     this.setState((prevState) => {
       prevState.comment[field] = value;
@@ -63,7 +63,7 @@ export default class DialogBox extends React.Component {
             <p>{review.author_name}</p>
             <p>{reviewRating}</p>
           </div>
-          <div className="textReview">{review.text}</div>
+          <p className="textReview">{review.text}</p>
       </div>);
       return cardReviews;
       });
@@ -88,7 +88,7 @@ export default class DialogBox extends React.Component {
             <div className="dialogBox">
                 <div className="streetView">
                   <h3>Street View</h3>
-                  <img src={this.props.streetView} alt="streetView" />
+                  <img style={{width: '100%'}} src={this.props.streetView} alt="streetView" />
                   <h3>Leave Your Comment Here</h3>
                   <form className="dropReview">
                     <label htmlFor="author_name">Author:</label> <br />

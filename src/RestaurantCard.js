@@ -47,7 +47,7 @@ class RestaurantCard extends React.Component {
                     placeId={this.props.placeId}/>
                 </div>
                 <div className="product-image">
-                    <img style={{width: '160px', height: '120px'}} src={this.state.photo} alt='Restaurant'/>
+                    <img style={{width: '100%', height: '120px'}} src={(this.props.isMyRes)? this.props.imageSrc:this.state.photo} alt='Restaurant'/>
                 </div>
                 
             </div>

@@ -137,13 +137,8 @@ export class MapContainer extends Component {
 
 
     return (
-      <div>
-        <div>
+      <div style={{position: 'relative', width: '70vw',height: '100vh', paddingLeft: '0px'}}>
           <Map
-            style={{
-              width: '70vw',
-              height: '100vh',
-            }}
             google={this.props.google}
             onReady={this.fetchPlaces}
             zoom={14}
@@ -176,7 +171,7 @@ export class MapContainer extends Component {
               imageSrc={res.photo}
               address={res.vicinity}
               rating={res.rating}
-              open={res.opening_hours.open_now}
+              // open={res.opening_hours.open_now}
               animation={this.state.activeMarker ? (res.name === this.state.activeMarker.title ? '1' : '0') : '0'}
               icon={{
                 url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
@@ -225,7 +220,6 @@ export class MapContainer extends Component {
             </InfoWindow>
 
           </Map>
-        </div>
 
         {this.state.addNewRes?
       <Dialog open={this.state.addNewRes} modal={false} onRequestClose={this.handleClose}>

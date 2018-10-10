@@ -4,6 +4,7 @@ import GoogleApiWrapper from "./Map.js";
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Sort from "./Sort.js";
 import Sidebar from "./Sidebar.js";
+import logo from './logo.png';
 
 class App extends Component {
   constructor(props) {
@@ -11,35 +12,57 @@ class App extends Component {
     this.state = {
       restaurants: [],
       places: [],
-      filterTool: {
-        minStar: "",
-        maxStar: "",
-      }
+      placesBeforeFilter: [],
+      restaurantsBeforeFilter: []
     }
   }
 
 
   getGooglePlaces = (places) => {
     this.setState({
-      places: places
+      places: places,
+      placesBeforeFilter: places
     })
-    return console.log(this.state.places[0].opening_hours.open_now);
+    return this.state.places[0].opening_hours.open_now;
   };
 
-  handleFilter = (name, value) => {
-    this.setState({
-      filterTool: {
-        [name]: value,
+
+
+  filterFunction = (minStar, maxStar) => {
+    if(minStar && maxStar) {
+      let googlePlaces = this.state.places;
+      let myRestaurants = this.state.restaurants;
+      function isFiltered(place) {
+        if (place.rating*10 >= Number(minStar)*10 && place.rating*10 <= Number(maxStar)*10) {
+          return place;
+        }
       }
-    })
-  }
+      googlePlaces = googlePlaces.filter(isFiltered)
+      myRestaurants = myRestaurants.filter(isFiltered)
+      this.setState(prevState => {
+        prevState.places = googlePlaces;
+        prevState.restaurants = myRestaurants;
+        return {places: prevState.places, restaurants: prevState.restaurants}
+      })
+    return this.state.places
+    }}
+
+    clearFilter = () => {
+      this.setState({
+        places: this.state.placesBeforeFilter,
+        restaurants: this.state.restaurantsBeforeFilter,
+      })
+    }
 
 
    //Fetch restaurants from local JSON file
   componentDidMount() {
    import('./Restaurants.json')
    .then((data) => {
-     this.setState({restaurants: data})
+     this.setState({
+      restaurants: data,
+      restaurantsBeforeFilter: data,
+      })
    })}  
    
 
@@ -49,27 +72,27 @@ class App extends Component {
       <MuiThemeProvider>
       <div className="App">
         <header className="App-header">
-          {/* <img src={logo} className="App-logo" alt="logo" /> */}
-          <h1 className="App-title">Restaurant Reviews</h1>
+          <div className="App-title">Restaurant Reviews</div>
+          <div className="App-title" style={{textAlign: 'left'}}><img style={{width: '90px', height: '80px'}} src={logo}  alt="logo" /></div>
         </header>
-        <div style={{display: 'flex', height: '100vh'}}>
-          <div style={{width: '70%'}}>
+        <div>
+          <div className="mainContent" style={{width: '70vw', height: 'inherit'}}>
             <GoogleApiWrapper myRestaurants={this.state.restaurants} 
               googlePlaces={this.getGooglePlaces} places={this.state.places}
-              currentLocation={this.state.currentLocation}
-              onFilter={this.handleFilter}/>
+            />
           </div>
-          <div style={{width: '25%',height: 'inherit',
-            border: '1px solid green',margin: '0 auto'}}>
+          <div className="mainContent" style={{width: '25vw',height: 'inherit',
+            border: '0.5px solid green', margin: '0 3px'}}>
             <Sort googlePlaces = {this.state.places}
               myRestaurants={this.state.restaurants}
-              onFilter={this.handleFilter}
-              minStar={this.state.filterTool.minStar}
-              maxStar={this.state.filterTool.maxStar}/>
+              onChange={this.handleChange}
+              onFilter={this.filterFunction}
+              onClearFilter={this.clearFilter}
+            />
             <Sidebar id='resultCards'
               googlePlaces = {this.state.places}
               myRestaurants={this.state.restaurants}
-              onFilter={this.handleFilter}/>
+            />
           </div>
         </div>
       </div>
