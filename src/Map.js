@@ -171,7 +171,6 @@ export class MapContainer extends Component {
               imageSrc={res.photo}
               address={res.vicinity}
               rating={res.rating}
-              // open={res.opening_hours.open_now}
               animation={this.state.activeMarker ? (res.name === this.state.activeMarker.title ? '1' : '0') : '0'}
               icon={{
                 url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
@@ -201,7 +200,6 @@ export class MapContainer extends Component {
             <InfoWindow
               marker={this.state.activeMarker}
               visible={this.state.showingInfoWindow}
-              
             >
             {this.state.showingInfoWindow? 
               <div>
