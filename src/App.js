@@ -23,7 +23,7 @@ class App extends Component {
       places: places,
       placesBeforeFilter: places
     })
-    return this.state.places[0].opening_hours.open_now;
+    return this.state.places;
   };
 
   filterFunction = (minStar, maxStar) => {
