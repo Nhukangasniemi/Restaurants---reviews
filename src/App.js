@@ -26,16 +26,16 @@ class App extends Component {
     return this.state.places[0].opening_hours.open_now;
   };
 
-
-
   filterFunction = (minStar, maxStar) => {
     if(minStar && maxStar) {
       let googlePlaces = this.state.places;
       let myRestaurants = this.state.restaurants;
       function isFiltered(place) {
-        if (place.rating*10 >= Number(minStar)*10 && place.rating*10 <= Number(maxStar)*10) {
+        if (Number(minStar) < Number(maxStar) && place.rating*10 >= Number(minStar)*10 && place.rating*10 <= Number(maxStar)*10) {
           return place;
-        }
+        } else if (Number(minStar) === Number(maxStar) && (place.rating*10) >= (Number(maxStar)*10 -5) && (place.rating*10) <= Number(maxStar)*10)  {
+          return place;
+        } else {return}
       }
       googlePlaces = googlePlaces.filter(isFiltered)
       myRestaurants = myRestaurants.filter(isFiltered)

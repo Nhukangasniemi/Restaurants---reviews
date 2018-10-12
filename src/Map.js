@@ -26,16 +26,11 @@ export class MapContainer extends Component {
     };
   }
 
-
-  componentDidUpdate() {
-    console.log("Component Did update")
-  }
   fetchPlaces = (mapProps, map) => {
     this.setState({map: map})
     this.searchNearby(map);
   }
 
- 
   searchNearby = (map) => {
     //Fetch Nearby Restaurant using Google Places API
     const {google} = this.props;
@@ -207,11 +202,6 @@ export class MapContainer extends Component {
                 <p style={{color: '#901010'}}>
                   {this.state.activeMarker.address}
                 </p>
-                <div>
-                  
-                {/* <img style={{width: 150, height: 100, 
-                display: (this.state.activeMarker.name === "Current location")? 'none': 'visible'}} src={`${this.state.activeMarker.imageSrc}`} alt={'Restaurant'} /> */}
-                </div>
               </div>
               : <div>Not available</div>
             }
