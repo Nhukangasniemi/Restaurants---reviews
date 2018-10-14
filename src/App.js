@@ -26,6 +26,26 @@ class App extends Component {
     return this.state.places;
   };
 
+  showStars = (avgRating) => {
+    let stars;
+    if(avgRating === '0') {
+        stars = "☆☆☆☆☆";
+    } else if (avgRating >=1 && avgRating<1.5) {
+      stars = "★☆☆☆☆";
+    } else if (avgRating >=1.5 && avgRating<2.5) {
+      stars = "★★☆☆☆";
+    } else if (avgRating >=2.5 && avgRating<3.5) {
+        stars = "★★★☆☆";
+    } else if (avgRating >=3.5 && avgRating<4.5) {
+        stars = "★★★★☆";
+    } else if (avgRating >= 4.5) {
+        stars = "★★★★★";
+    } else {
+        stars = "";
+    }
+    return stars;
+  };
+
   filterFunction = (minStar, maxStar) => {
     if(minStar && maxStar) {
       let googlePlaces = this.state.places;
@@ -79,6 +99,7 @@ class App extends Component {
           <div className="mainContent" style={{width: '70vw', height: 'inherit'}}>
             <GoogleApiWrapper myRestaurants={this.state.restaurants} 
               googlePlaces={this.getGooglePlaces} places={this.state.places}
+              showStars={this.showStars}
             />
           </div>
           <div className="mainContent" style={{width: '25vw',height: 'inherit',
@@ -92,6 +113,7 @@ class App extends Component {
             <Sidebar id='resultCards'
               googlePlaces = {this.state.places}
               myRestaurants={this.state.restaurants}
+              showStars={this.showStars}
             />
           </div>
         </div>

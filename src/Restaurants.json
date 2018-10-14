@@ -4,7 +4,7 @@
       "vicinity":"Tesoman koulu, 33310 Tampere",
       "lat":61.508022915221915,
       "lng":23.626542821643056,
-      "imageSrc": "https://cdn.pixabay.com/photo/2016/02/05/15/34/pasta-1181189_960_720.jpg",
+      "imageSrc": "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
       "rating": 4, 
       "reviews":[
          {
@@ -34,7 +34,7 @@
       "vicinity":"Karjakontie 23, 33340 Tampere",
       "lat":61.511502986191644,
       "lng":23.609162107226553,
-      "imageSrc": "https://cdn.pixabay.com/photo/2018/09/07/17/50/fruit-3661159_960_720.jpg",
+      "imageSrc": "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
       "rating": 3,
       "reviews":[
          {
@@ -64,7 +64,7 @@
     "vicinity":"Kalkunvuorenkatu 52, 33310 Tampere",
     "lat":61.504416,
     "lng":23.610967,
-    "imageSrc": "https://cdn.pixabay.com/photo/2017/03/10/13/57/cooking-2132874_960_720.jpg",
+    "imageSrc": "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
     "rating": 4,
     "reviews":[
         {
@@ -94,7 +94,7 @@
     "vicinity":"Metsäkylänkatu 19, 33300 Tampere",
     "lat":61.500608,
     "lng":23.629071,
-    "imageSrc": "https://cdn.pixabay.com/photo/2018/08/29/19/01/fig-3640553_960_720.jpg",
+    "imageSrc": "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
     "rating": 5,
     "reviews":[
         {

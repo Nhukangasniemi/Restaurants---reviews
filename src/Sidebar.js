@@ -3,25 +3,6 @@ import RestaurantCard from './RestaurantCard.js'
 
 class Sidebar extends React.Component {
 
-    showStars = (avgRating) => {
-        let stars;
-        if(avgRating === '0') {
-            stars = "☆☆☆☆☆";
-        } else if (avgRating >=1 && avgRating<1.5) {
-          stars = "★☆☆☆☆";
-        } else if (avgRating >=1.5 && avgRating<2.5) {
-          stars = "★★☆☆☆";
-        } else if (avgRating >=2.5 && avgRating<3.5) {
-            stars = "★★★☆☆";
-        } else if (avgRating >=3.5 && avgRating<4.5) {
-            stars = "★★★★☆";
-        } else if (avgRating >= 4.5) {
-            stars = "★★★★★";
-        } else {
-            stars = "";
-        }
-        return stars;
-      };
 
     render() {
         let googlePlacesCards = [];
@@ -32,8 +13,8 @@ class Sidebar extends React.Component {
                 placeId={place.place_id}
                 imageSrc={place.photo}
                 streetView={`https://maps.googleapis.com/maps/api/streetview?size=450x370&location=${place.geometry.location.lat()},${place.geometry.location.lng()}&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA&fov=90&heading=235&pitch=10`}
-                rating={this.showStars(place.rating)}
-                showStars={this.showStars}
+                rating={this.props.showStars(place.rating)}
+                showStars={this.props.showStars}
             />)
             return place
             });
@@ -51,8 +32,8 @@ class Sidebar extends React.Component {
                     imageSrc={res.imageSrc}
                     streetView={`https://maps.googleapis.com/maps/api/streetview?size=450x370&location=${res.lat},${res.lng}&key=AIzaSyCZ7rgMN34kWkGvr8Pzkf_8nkT7W6gowBA&fov=90&heading=235&pitch=10`}
                     resReviews={res.reviews}
-                    rating={this.showStars(res.rating)} 
-                    showStars={this.showStars}
+                    rating={this.props.showStars(res.rating)}
+                    showStars={this.props.showStars} 
                     />)
                 }
                 </div>

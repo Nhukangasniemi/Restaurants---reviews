@@ -49,7 +49,7 @@ export class MapContainer extends Component {
     const service = new google.maps.places.PlacesService(map);
     const request = {
       location: initialLocation,
-      radius: '1000',
+      radius: '900',
       type: ['restaurant']
     };
 
@@ -61,7 +61,7 @@ export class MapContainer extends Component {
   })}}
 
   //Show Info Window when user click on Marker
-  onMarkerClick = (props, marker) => {
+  onMarkerClick = (props, marker, e) => {
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
@@ -130,7 +130,6 @@ export class MapContainer extends Component {
       strokeWeight: 3
     };
 
-
     return (
       <div style={{position: 'relative', width: '70vw',height: '100vh', paddingLeft: '0px'}}>
           <Map
@@ -147,7 +146,6 @@ export class MapContainer extends Component {
             }}
             onClick={(t, map, c) => this.onMapClick(c.latLng, map)}
             googlePlaces={this.state.places}
-            centerAroundCurrentLocation
           >
             
             <Marker
@@ -199,8 +197,9 @@ export class MapContainer extends Component {
             {this.state.showingInfoWindow? 
               <div>
                 <h2 style={{color: '#FF8C00'}}>{this.state.selectedPlace.name}</h2>
+                <p style={{color: '#FF8C00'}}>{this.props.showStars(this.state.activeMarker.rating)}</p>
                 <p style={{color: '#901010'}}>
-                  {this.state.activeMarker.address}
+                  {this.state.activeMarker.address} <br />
                 </p>
               </div>
               : <div>Not available</div>
