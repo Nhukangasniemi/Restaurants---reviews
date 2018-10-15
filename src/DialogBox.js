@@ -45,6 +45,7 @@ export default class DialogBox extends React.Component {
     e.preventDefault();
   }
 
+
   render() {
     const actions = [
       <FlatButton
@@ -70,6 +71,7 @@ export default class DialogBox extends React.Component {
     }
 
 
+
     return (
       <div>
         <RaisedButton className="infoButton" label="More Info" onClick={this.handleOpen}/>
@@ -88,7 +90,6 @@ export default class DialogBox extends React.Component {
             <div className="dialogBox">
                 <div className="streetView">
                   <h3>Street View</h3>
-                  <img style={{width: '100%'}} src={this.props.streetView} alt="streetView" />
                   <h3>Leave Your Comment Here</h3>
                   <form className="dropReview">
                     <label htmlFor="author_name">Author:</label> <br />

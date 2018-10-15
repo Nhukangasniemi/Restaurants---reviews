@@ -44,7 +44,8 @@ class RestaurantCard extends React.Component {
                     </p>
                     <DialogBox name={this.props.name} streetView={this.props.streetView} 
                     cardReviews={cardReviews} showStars={this.props.showStars}
-                    placeId={this.props.placeId}/>
+                    placeId={this.props.placeId} google={this.props.google} geometry={this.props.geometry}
+                    map={this.props.map}/>
                 </div>
                 <div className="product-image">
                     <img style={{width: '100%', height: '120px'}} src={(this.props.isMyRes)? this.props.imageSrc:this.state.photo} alt='Restaurant'/>

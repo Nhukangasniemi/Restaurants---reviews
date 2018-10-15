@@ -27,7 +27,8 @@ export class MapContainer extends Component {
   }
 
   fetchPlaces = (mapProps, map) => {
-    this.setState({map: map})
+    this.props.setGoogleandMap(this.props.google, map);
+    this.setState({map: map});
     this.searchNearby(map);
   }
 
@@ -55,7 +56,7 @@ export class MapContainer extends Component {
 
     service.nearbySearch(request, (results, status) => {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        return this.props.googlePlaces(results);
+        return this.props.googlePlaces(results, google, map);
       }
     })
   })}}
@@ -66,7 +67,28 @@ export class MapContainer extends Component {
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true,
-    });   
+    }); 
+    const {google} = this.props;
+    const lat = (props.googleResults? props.position.lat(): props.position.lat);
+    const lng = (props.googleResults? props.position.lng(): props.position.lng);
+    let sv = new google.maps.StreetViewService();
+      const panoDiv = document.getElementById('pano');
+      sv.getPanorama({
+          location: {lat: lat, lng: lng}, 
+          radius: 50
+      }, processSVData);
+      
+      function processSVData(data, status) {
+        if (status === 'OK') {
+            let panorama = new google.maps.StreetViewPanorama(panoDiv);
+            panorama.setPano(data.location.pano);
+            panorama.setPov({
+                heading: 270,
+                pitch: 0
+            });
+            panorama.setVisible(true);
+        }
+      }  
   }
   
   //Allow User To Add New Restaurant By Clicking On Map
@@ -89,9 +111,10 @@ export class MapContainer extends Component {
     this.setState({
       newRes: {
         newResName: e.target.value,
-        location: this.state.getNewLocation,
+        location: this.state.getNewLocation
       }
-    }) 
+    })
+    console.log(this.state.newRes.location)
   }
 
   //Show Marker For New Restaurant After Submit Button
@@ -103,7 +126,7 @@ export class MapContainer extends Component {
     this.setState(prevState => {
       prevState.newResMarker.push(<Marker onClick={this.onMarkerClick}
               title={this.state.newRes.newResName} 
-              position={this.state.newRes.location}
+              position={{lat: this.state.newRes.location.lat(), lng: this.state.newRes.location.lng()}}
               name={this.state.newRes.newResName}
               key={this.state.newRes.newResName} imageSrc={"https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png"}
     />)
@@ -157,6 +180,7 @@ export class MapContainer extends Component {
 
             {this.props.places.map(res =>
               <Marker onClick={this.onMarkerClick}
+              googleResults={true}
               title={res.name} 
               position={res.geometry.location}
               name={res.name}
@@ -201,6 +225,7 @@ export class MapContainer extends Component {
                 <p style={{color: '#901010'}}>
                   {this.state.activeMarker.address} <br />
                 </p>
+                <div id="pano" style={{width: '400px', height: '300px'}}></div>
               </div>
               : <div>Not available</div>
             }

@@ -10,6 +10,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      google: null,
+      map: null,
       restaurants: [],
       places: [],
       placesBeforeFilter: [],
@@ -17,12 +19,19 @@ class App extends Component {
     }
   }
 
+  setGoogleandMap = (google, map) => {
+    this.setState({
+      google: google,
+      map: map,
+    })
+  }
 
   getGooglePlaces = (places) => {
     this.setState({
       places: places,
-      placesBeforeFilter: places
-    })
+      placesBeforeFilter: places,
+      
+    });
     return this.state.places;
   };
 
@@ -99,7 +108,7 @@ class App extends Component {
           <div className="mainContent" style={{width: '70vw', height: 'inherit'}}>
             <GoogleApiWrapper myRestaurants={this.state.restaurants} 
               googlePlaces={this.getGooglePlaces} places={this.state.places}
-              showStars={this.showStars}
+              showStars={this.showStars} setGoogleandMap={this.setGoogleandMap}
             />
           </div>
           <div className="mainContent" style={{width: '25vw',height: 'inherit',
@@ -114,8 +123,11 @@ class App extends Component {
               googlePlaces = {this.state.places}
               myRestaurants={this.state.restaurants}
               showStars={this.showStars}
+              google={this.state.google}
+              map={this.state.map}
             />
           </div>
+          
         </div>
       </div>
       </MuiThemeProvider>
