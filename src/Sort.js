@@ -35,7 +35,7 @@ class Sort extends React.Component {
 
     render() {
         return(
-             <div style={{backgroundColor: '#07b5b2', paddingTop: '5px'}}>
+             <div style={{backgroundColor: '#07b5b2', paddingTop: '2px'}}>
                 <form className="sortForm">
                     <div className="minBox">
                     <b>Min. Stars</b><br/>

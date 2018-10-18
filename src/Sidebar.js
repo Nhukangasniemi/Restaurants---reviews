@@ -13,15 +13,8 @@ class Sidebar extends React.Component {
                 key={place.id} 
                 name={place.name}
                 placeId={place.place_id}
-                imageSrc={place.photo}
                 rating={this.props.showStars(place.rating)}
                 showStars={this.props.showStars}
-                google={this.props.google}
-                map={this.props.map}
-                geometry={{
-                    lat: place.lat,
-                    lng: place.lng
-                }}
             />)
             return place
             });
@@ -40,12 +33,6 @@ class Sidebar extends React.Component {
                     resReviews={res.reviews}
                     rating={this.props.showStars(res.rating)}
                     showStars={this.props.showStars}
-                    google={this.props.google}
-                    map={this.props.map}
-                    geometry={{
-                        lat: res.lat,
-                        lng: res.lng
-                    }} 
                     />)
                 }
                 </div>

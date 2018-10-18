@@ -10,20 +10,11 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      google: null,
-      map: null,
       restaurants: [],
       places: [],
       placesBeforeFilter: [],
       restaurantsBeforeFilter: []
     }
-  }
-
-  setGoogleandMap = (google, map) => {
-    this.setState({
-      google: google,
-      map: map,
-    })
   }
 
   getGooglePlaces = (places) => {
@@ -60,9 +51,9 @@ class App extends Component {
       let googlePlaces = this.state.places;
       let myRestaurants = this.state.restaurants;
       function isFiltered(place) {
-        if (Number(minStar) < Number(maxStar) && place.rating*10 >= Number(minStar)*10 && place.rating*10 <= Number(maxStar)*10) {
+        if (Number(minStar) < Number(maxStar) && place.rating*10 >= (Number(minStar)*10-5) && place.rating*10 <= (Number(maxStar)*10+5)) {
           return place;
-        } else if (Number(minStar) === Number(maxStar) && (place.rating*10) >= (Number(maxStar)*10 -5) && (place.rating*10) <= Number(maxStar)*10)  {
+        } else if (Number(minStar) === Number(maxStar) && (place.rating*10) >= (Number(maxStar)*10 -5) && (place.rating*10) <= (Number(maxStar)*10+5))  {
           return place;
         } else {return}
       }
@@ -108,7 +99,7 @@ class App extends Component {
           <div className="mainContent" style={{width: '70vw', height: 'inherit'}}>
             <GoogleApiWrapper myRestaurants={this.state.restaurants} 
               googlePlaces={this.getGooglePlaces} places={this.state.places}
-              showStars={this.showStars} setGoogleandMap={this.setGoogleandMap}
+              showStars={this.showStars}
             />
           </div>
           <div className="mainContent" style={{width: '25vw',height: 'inherit',
@@ -123,11 +114,8 @@ class App extends Component {
               googlePlaces = {this.state.places}
               myRestaurants={this.state.restaurants}
               showStars={this.showStars}
-              google={this.state.google}
-              map={this.state.map}
             />
           </div>
-          
         </div>
       </div>
       </MuiThemeProvider>

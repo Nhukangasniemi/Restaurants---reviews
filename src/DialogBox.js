@@ -70,6 +70,12 @@ export default class DialogBox extends React.Component {
       });
     }
 
+    let openingHours = [];
+    if(this.props.opening) {
+      this.props.opening.map((day) => {
+        return openingHours.push(<li key={day}>{day}</li>);
+      })
+    }
 
 
     return (
@@ -89,7 +95,10 @@ export default class DialogBox extends React.Component {
         >
             <div className="dialogBox">
                 <div className="streetView">
-                  <h3>Street View</h3>
+                  <h3>{this.props.name}</h3>
+                  <p>Website: <a href={this.props.website}>{this.props.website}</a></p>
+                  <p>Phone: <b>{this.props.phone}</b></p>
+                  <ul style={{listStyleType: 'none', textAlign: 'left', display: 'inline-block'}}>{openingHours}</ul>
                   <h3>Leave Your Comment Here</h3>
                   <form className="dropReview">
                     <label htmlFor="author_name">Author:</label> <br />

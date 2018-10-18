@@ -2,9 +2,14 @@ import React, { Component } from "react";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import Dialog from 'material-ui/Dialog';
 
+// const PanoramaView = React.forwardRef((props, ref) => (
+//   <div id="panoView" ref={ref} style={{width: '400px', height: '300px'}}></div>
+// ));
+
 export class MapContainer extends Component {
   constructor(props) {
     super(props);
+    this.panoRef = React.createRef();
     this.state = {
       map: null,
       currentLocation: {
@@ -24,10 +29,10 @@ export class MapContainer extends Component {
       newResMarker: [],
       addNewRes: false,
     };
+    
   }
 
   fetchPlaces = (mapProps, map) => {
-    this.props.setGoogleandMap(this.props.google, map);
     this.setState({map: map});
     this.searchNearby(map);
   }
@@ -51,15 +56,17 @@ export class MapContainer extends Component {
     const request = {
       location: initialLocation,
       radius: '900',
-      type: ['restaurant']
+      type: ['restaurant'],
     };
 
     service.nearbySearch(request, (results, status) => {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        return this.props.googlePlaces(results, google, map);
+        return this.props.googlePlaces(results);
       }
     })
-  })}}
+    })
+    }
+  }
 
   //Show Info Window when user click on Marker
   onMarkerClick = (props, marker, e) => {
@@ -69,10 +76,9 @@ export class MapContainer extends Component {
       showingInfoWindow: true,
     }); 
     const {google} = this.props;
-    const lat = (props.googleResults? props.position.lat(): props.position.lat);
-    const lng = (props.googleResults? props.position.lng(): props.position.lng);
+    const lat = e.latLng.lat();
+    const lng = e.latLng.lng();
     let sv = new google.maps.StreetViewService();
-      const panoDiv = document.getElementById('pano');
       sv.getPanorama({
           location: {lat: lat, lng: lng}, 
           radius: 50
@@ -80,7 +86,7 @@ export class MapContainer extends Component {
       
       function processSVData(data, status) {
         if (status === 'OK') {
-            let panorama = new google.maps.StreetViewPanorama(panoDiv);
+            let panorama = new google.maps.StreetViewPanorama(document.getElementById("pano"));
             panorama.setPano(data.location.pano);
             panorama.setPov({
                 heading: 270,
@@ -114,7 +120,6 @@ export class MapContainer extends Component {
         location: this.state.getNewLocation
       }
     })
-    console.log(this.state.newRes.location)
   }
 
   //Show Marker For New Restaurant After Submit Button
@@ -154,7 +159,7 @@ export class MapContainer extends Component {
     };
 
     return (
-      <div style={{position: 'relative', width: '70vw',height: '100vh', paddingLeft: '0px'}}>
+      <div style={{position: 'relative', width: '100%',height: '100vh', paddingLeft: '0px'}}>
           <Map
             google={this.props.google}
             onReady={this.fetchPlaces}
@@ -225,6 +230,7 @@ export class MapContainer extends Component {
                 <p style={{color: '#901010'}}>
                   {this.state.activeMarker.address} <br />
                 </p>
+                {/* <PanoramaView ref={this.panoRef}/> */}
                 <div id="pano" style={{width: '400px', height: '300px'}}></div>
               </div>
               : <div>Not available</div>
