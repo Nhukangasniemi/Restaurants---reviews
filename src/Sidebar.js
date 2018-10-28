@@ -3,7 +3,6 @@ import RestaurantCard from './RestaurantCard.js'
 
 class Sidebar extends React.Component {
 
-
     render() {
         let googlePlacesCards = [];
         this.props.googlePlaces.map(place => {

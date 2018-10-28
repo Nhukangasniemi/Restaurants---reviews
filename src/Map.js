@@ -2,14 +2,9 @@ import React, { Component } from "react";
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from "google-maps-react";
 import Dialog from 'material-ui/Dialog';
 
-// const PanoramaView = React.forwardRef((props, ref) => (
-//   <div id="panoView" ref={ref} style={{width: '400px', height: '300px'}}></div>
-// ));
-
 export class MapContainer extends Component {
   constructor(props) {
     super(props);
-    this.panoRef = React.createRef();
     this.state = {
       map: null,
       currentLocation: {
@@ -230,7 +225,6 @@ export class MapContainer extends Component {
                 <p style={{color: '#901010'}}>
                   {this.state.activeMarker.address} <br />
                 </p>
-                {/* <PanoramaView ref={this.panoRef}/> */}
                 <div id="pano" style={{width: '400px', height: '300px'}}></div>
               </div>
               : <div>Not available</div>

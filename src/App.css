@@ -25,7 +25,6 @@
   width: 100vw;
 }
 .card {
-  /* background: rgb(216, 214, 192) !important; */
   display: flex;
   text-align: center;
   width: inherit;
