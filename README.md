@@ -2,7 +2,7 @@
 
 ###### It's a react web app which locates your current location immediately when you open it. The purpose is to show users their surrounding restaurants together with real reviews fetched from Google API.
 
-###### Besides, the app also lets users to add their own reviews and list new restaurants. 
+###### Besides, the app also lets users to add their own reviews and list new restaurants. Street panorama view will help users to recognize the restaurants' surrounding areas.  
 
 ### DEMO:
 
